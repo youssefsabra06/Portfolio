@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="assets/youssef-sabra.jpg">
+<style>html{color-scheme:light}*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Youssef Sabra Portfolio</title>
+<meta name="description" content="Engineering projects by Youssef Sabra, MEng Mechanical and Electrical Engineering, University of Bristol.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: one long engineering logbook. Each project opens with a drawing-style title block, then media, then what I did and the measured results. */
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --fg: #151c26;
+  --muted: #5a6575;
+  --line: #d6dce4;
+  --ink: #16365c;        /* navy, same as the CV */
+  --copper: #a85a22;     /* inductor-wire copper */
+  --copper-soft: #f3e6dc;
+  --ok: #2f6b45;
+
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(2rem, 4.5vw, 2.75rem);
+  --step-4: clamp(2.5rem, 7vw, 4.25rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d131a; --surface: #141c26; --fg: #e5eaf0; --muted: #98a4b3; --line: #253140;
+    --ink: #9dbbe3; --copper: #e39a62; --copper-soft: #2b2018; --ok: #7cc196;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d131a; --surface: #141c26; --fg: #e5eaf0; --muted: #98a4b3; --line: #253140;
+  --ink: #9dbbe3; --copper: #e39a62; --copper-soft: #2b2018; --ok: #7cc196;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--body); font-size: var(--step-0); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+h1, h2, h3 { font-family: var(--display); font-stretch: 85%; line-height: 1.1; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--ink); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; border-radius: 2px; }
+.label {
+  font-family: var(--mono); font-size: var(--step--1); letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { font-family: var(--display); font-weight: 700; font-stretch: 85%; font-size: 1.05rem; color: var(--fg); text-decoration: none; white-space: nowrap; }
+.nav { display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { font-size: 0.9rem; color: var(--muted); text-decoration: none; white-space: nowrap; }
+.nav a:hover { color: var(--fg); }
+@media (max-width: 560px) { .nav .hide-sm { display: none; } }
+
+/* ---------- Hero ---------- */
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; padding-block: 64px 56px; }
+@media (max-width: 820px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 40px; } .hero .portrait { order: -1; } }
+.portrait { display: block; width: clamp(150px, 22vw, 240px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--line), 0 10px 30px -12px rgba(16, 32, 56, 0.35); }
+.portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.portrait:hover { box-shadow: 0 0 0 2px var(--ink), 0 10px 30px -12px rgba(16, 32, 56, 0.35); }
+.hero h1 { font-size: var(--step-4); font-weight: 800; color: var(--ink); letter-spacing: -0.01em; }
+.hero .role { margin-top: 14px; font-size: var(--step-1); font-weight: 500; }
+.hero .intro { margin-top: 18px; max-width: 58ch; color: var(--muted); }
+.hero .links { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px;
+  background: var(--ink); color: var(--bg); text-decoration: none; font-weight: 600; font-size: 0.95rem; border-radius: 3px;
+}
+.btn:hover { filter: brightness(1.08); }
+.textlink { font-weight: 500; }
+.hero figure { margin: 0; }
+.hero video {
+  display: block; width: 100%; max-width: 360px; aspect-ratio: 9 / 16; object-fit: cover;
+  margin-left: auto; background: var(--line); border-radius: 4px;
+}
+@media (max-width: 820px) { .hero video { margin: 0 auto; max-width: 300px; } }
+.hero figcaption { margin-top: 10px; text-align: right; }
+@media (max-width: 820px) { .hero figcaption { text-align: center; } }
+
+/* ---------- Project index ---------- */
+.index { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+.index .wrap { padding-block: 0; }
+.index ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); }
+@media (max-width: 1000px) { .index ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.log { margin-top: 44px; }
+.log h3 { font-size: var(--step-1); font-weight: 700; margin-bottom: 6px; }
+.entries { list-style: none; margin: 14px 0 0; padding: 0; border-left: 2px solid var(--line); }
+.entries li { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 4px 18px; padding: 10px 0 10px 18px; position: relative; }
+.entries li::before { content: ""; position: absolute; left: -6px; top: 16px; width: 10px; height: 10px; border-radius: 50%; background: var(--copper); }
+.entries time { font-family: var(--mono); font-size: 0.8125rem; color: var(--muted); padding-top: 2px; }
+@media (max-width: 520px) { .entries li { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .index ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .index ol { grid-template-columns: minmax(0, 1fr); } }
+.index li { background: var(--surface); }
+.index a { display: grid; gap: 6px; padding: 20px 18px; text-decoration: none; color: var(--fg); height: 100%; }
+.index a:hover { background: var(--copper-soft); }
+.index .code { font-family: var(--mono); font-size: var(--step--1); color: var(--copper); }
+.index .name { font-family: var(--display); font-stretch: 85%; font-weight: 700; font-size: 1.1rem; line-height: 1.2; }
+.index .what { font-size: 0.875rem; color: var(--muted); }
+
+/* ---------- Project sections ---------- */
+.project { padding-block: 72px; border-bottom: 1px solid var(--line); scroll-margin-top: 56px; }
+.project:last-of-type { border-bottom: 0; }
+.project-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 32px 48px; align-items: start; }
+@media (max-width: 880px) { .project-head { grid-template-columns: minmax(0, 1fr); } }
+.project h2 { font-size: var(--step-3); font-weight: 750; }
+.project .lede { margin-top: 16px; max-width: 62ch; font-size: 1.075rem; }
+
+/* Drawing-style title block */
+.titleblock {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  border: 1.5px solid var(--fg); font-family: var(--mono); font-size: 0.8125rem; background: var(--surface);
+}
+.titleblock div { padding: 8px 10px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
+.titleblock div:nth-child(2n) { border-right: 0; }
+.titleblock div:nth-last-child(-n+2) { border-bottom: 0; }
+.titleblock .wide { grid-column: 1 / -1; border-right: 0; }
+.titleblock dt { font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.titleblock dd { margin: 2px 0 0; color: var(--fg); overflow-wrap: anywhere; }
+.status { color: var(--copper); font-weight: 500; }
+
+.cols { margin-top: 44px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px 48px; }
+@media (max-width: 880px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+.cols h3, .figs-title { font-size: var(--step-1); font-weight: 700; margin-bottom: 14px; }
+.did { margin: 0; padding-left: 1.1em; display: grid; gap: 10px; }
+.did li::marker { color: var(--copper); }
+
+/* Target vs achieved table */
+.tablewrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.met { color: var(--ok); }
+.note { margin-top: 10px; font-size: 0.875rem; color: var(--muted); max-width: 62ch; }
+
+/* Figure gallery */
+.figs { margin-top: 48px; }
+.gallery { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.gallery figure { margin: 0; grid-column: span 4; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.gallery figure.w6 { grid-column: span 6; }
+.gallery figure.w8 { grid-column: span 8; }
+.gallery figure.w12 { grid-column: span 12; }
+@media (max-width: 760px) { .gallery figure, .gallery figure.w6, .gallery figure.w8 { grid-column: span 12; } }
+.shot {
+  display: block; width: 100%; padding: 0; border: 1px solid var(--line); background: #fff; cursor: zoom-in;
+  border-radius: 3px; overflow: hidden;
+}
+.shot img { display: block; width: 100%; height: 220px; object-fit: contain; }
+.shot.photo img { object-fit: cover; }
+.gallery figure.w12 .shot img, .gallery figure.w8 .shot img { height: 280px; }
+.gallery figure.video video { display: block; width: 100%; height: 100%; min-height: 220px; max-height: 520px; object-fit: cover; border-radius: 3px; background: var(--line); }
+.gallery figure.video { grid-row: span 2; }
+.gallery figure.tall .shot img { height: 520px; }
+@media (max-width: 760px) { .shot img, .gallery figure.w12 .shot img, .gallery figure.w8 .shot img { height: auto; max-height: 360px; } }
+figcaption { font-size: 0.8125rem; color: var(--muted); line-height: 1.45; }
+figcaption b { color: var(--fg); font-weight: 600; }
+
+.report {
+  margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+  padding: 16px 18px; border: 1px dashed var(--line); border-radius: 3px;
+}
+.report .doc { font-family: var(--mono); font-size: 0.8125rem; color: var(--muted); }
+
+.pending { margin-top: 28px; padding: 16px 18px; background: var(--copper-soft); border-radius: 3px; font-size: 0.9375rem; max-width: 70ch; }
+
+/* ---------- Experience ---------- */
+.experience { padding-block: 72px; background: var(--surface); border-top: 1px solid var(--line); scroll-margin-top: 56px; }
+.experience h2, .contact h2 { font-size: var(--step-3); font-weight: 750; }
+.roles { margin-top: 32px; display: grid; gap: 0; }
+.roles article { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 8px 32px; padding-block: 20px; border-top: 1px solid var(--line); }
+@media (max-width: 640px) { .roles article { grid-template-columns: 1fr; } }
+.roles .when { font-family: var(--mono); font-size: 0.8125rem; color: var(--muted); padding-top: 3px; }
+.roles h3 { font-size: 1.15rem; font-weight: 700; }
+.roles .where { color: var(--muted); font-weight: 400; }
+.roles p { margin-top: 6px; max-width: 70ch; }
+
+/* ---------- Contact ---------- */
+.contact { padding-block: 64px 80px; scroll-margin-top: 56px; }
+.contact .row { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; }
+.email { font-family: var(--mono); font-size: 1rem; user-select: all; }
+.copy {
+  font: inherit; font-size: 0.875rem; padding: 6px 12px; border: 1px solid var(--line); background: var(--surface);
+  color: var(--fg); border-radius: 3px; cursor: pointer;
+}
+.copy:hover { border-color: var(--ink); }
+footer { padding-block: 24px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.8125rem; }
+
+/* ---------- Lightbox ---------- */
+dialog.lightbox {
+  border: 0; padding: 0; background: transparent; max-width: min(1200px, 94vw); max-height: 92vh; width: auto;
+}
+dialog.lightbox::backdrop { background: rgba(8, 12, 18, 0.86); }
+dialog.lightbox img { display: block; max-width: 100%; max-height: 82vh; margin: 0 auto; background: #fff; }
+dialog.lightbox p { margin-top: 10px; color: #dfe5ec; font-size: 0.875rem; text-align: center; }
+dialog.lightbox button {
+  position: absolute; top: 6px; right: 6px; font: inherit; font-size: 0.8125rem; padding: 6px 10px; border: 0;
+  background: rgba(0, 0, 0, 0.6); color: #fff; border-radius: 3px; cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">Youssef Sabra</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#solar-boat">Solar boat</a>
+      <a href="#power">Power &amp; machines</a>
+      <a href="#formula-student">Formula Student AI</a>
+      <a href="#tow-load">Tow load device</a>
+      <a href="#vibration" class="hide-sm">Vibration lab</a>
+      <a href="#heatsink" class="hide-sm">Heatsink</a>
+      <a href="#drawing" class="hide-sm">Drawing</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.linkedin.com/in/youssef-sabra-60b15327b" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="label">MEng Mechanical &amp; Electrical Engineering · University of Bristol</p>
+        <h1 style="margin-top:14px">Youssef Sabra</h1>
+        <p class="role">Electrical Team Lead, Bristol Formula Student AI</p>
+        <p class="intro">I like projects where the electronics and the mechanics have to work together: motor drives, power converters, safety circuits and the hardware they sit in. This page collects the projects I have built and tested, with the reports behind them.</p>
+        <div class="links">
+          <a class="btn" href="#solar-boat">See the projects</a>
+          <a class="textlink" href="https://www.linkedin.com/in/youssef-sabra-60b15327b" target="_blank" rel="noopener">LinkedIn profile ↗</a>
+          <a class="textlink" href="#contact">Contact</a>
+        </div>
+      </div>
+      <a class="portrait" href="https://www.linkedin.com/in/youssef-sabra-60b15327b" target="_blank" rel="noopener" aria-label="Youssef Sabra on LinkedIn"><img src="assets/youssef-sabra.jpg" alt="Youssef Sabra"></a>
+    </div>
+  </section>
+
+  <nav class="index" aria-label="Projects">
+    <div class="wrap">
+      <ol>
+        <li><a href="#solar-boat"><span class="code">2026 · Team lead</span><span class="name">Solar-powered boat</span><span class="what">BLDC drive, buck converter, full-scale design</span></a></li>
+        <li><a href="#power"><span class="code">2026 · Individual</span><span class="name">Power conversion &amp; machines</span><span class="what">Inverters, PFC, FEMM actuator, DC machines</span></a></li>
+        <li><a href="#formula-student"><span class="code">2026– · In progress</span><span class="name">Formula Student AI</span><span class="what">Electrical lead for a driverless race car</span></a></li>
+        <li><a href="#tow-load"><span class="code">2025 · Team lead</span><span class="name">Caravan tow load device</span><span class="what">Strain gauge and piezo force sensing</span></a></li>
+        <li><a href="#vibration"><span class="code">2025 · Individual lab</span><span class="name">Vibration stiffness test</span><span class="what">Sensor circuit and Python signal processing</span></a></li>
+        <li><a href="#heatsink"><span class="code">2025 · Group project</span><span class="name">Heatsink &amp; LED efficiency</span><span class="what">Thermal model checked against experiment</span></a></li>
+        <li><a href="#drawing"><span class="code">2024 · Individual</span><span class="name">Technical drawing</span><span class="what">Hand drawing and CAD part and assembly drawings</span></a></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ===================== SOLAR BOAT ===================== -->
+  <section class="project" id="solar-boat">
+    <div class="wrap">
+      <div class="project-head">
+        <div>
+          <p class="label">Project 01</p>
+          <h2 style="margin-top:8px">Solar-powered boat for the Amazon</h2>
+          <p class="lede">A solar-electric version of the rabeta, the long-shaft boat used on the rivers around Belém in Brazil. We designed the full-scale drive and charging system, then built a 1:10 prototype of the motor and shaft to prove the control system worked.</p>
+        </div>
+        <dl class="titleblock" aria-label="Project details">
+          <div class="wide"><dt>Project</dt><dd>Solar Boat, Electro-Mechanical Engineering Practice</dd></div>
+          <div><dt>Role</dt><dd>Team lead</dd></div>
+          <div><dt>Team</dt><dd>6 students</dd></div>
+          <div><dt>Prototype scale</dt><dd>1:10</dd></div>
+          <div><dt>Date</dt><dd>2026</dd></div>
+          <div class="wide"><dt>Controller</dt><dd>TI F28379D</dd></div>
+        </dl>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3>My role</h3>
+          <ul class="did">
+            <li>Led the team of 6 from brief to final design, and wrote the specification, modelling and final-design sections of the report.</li>
+            <li>Modelled the drive: drag and shaft torque, and battery sizing (48&nbsp;V, 160&nbsp;Ah for a 26&nbsp;km round trip).</li>
+            <li>Designed the 22&nbsp;V to 12&nbsp;V buck converter, including the 272&nbsp;µH inductor and its core air gap.</li>
+            <li>With the team, built the 1:10 BLDC prototype on a TI F28379D with Hall-sensor commutation, tuned the PWM duty cycle to hit 1,800&nbsp;rpm, and added a gearbox that doubled torque from 0.19 to 0.38&nbsp;Nm.</li>
+            <li>Checked the full-scale shaft structure with FEA in Fusion&nbsp;360.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Target vs achieved</h3>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Requirement</th><th>Target</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td>Prototype shaft speed</td><td class="num">1,800 rpm</td><td class="num met">1,800–1,875 rpm</td></tr>
+                <tr><td>Prototype torque</td><td class="num">0.2 Nm</td><td class="num met">0.38 Nm</td></tr>
+                <tr><td>Buck converter output</td><td class="num">12 V</td><td class="num met">12 V, 12–18 V in</td></tr>
+                <tr><td>Full-scale torque</td><td class="num">16 Nm</td><td class="num met">20.8 Nm</td></tr>
+                <tr><td>Full-scale cost</td><td class="num">≤ £3,000</td><td class="num met">£2,913</td></tr>
+                <tr><td>Drivetrain efficiency</td><td class="num">max.</td><td class="num">67.8%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">Full-scale figures come from calculation and manufacturer data. Prototype figures were measured on the bench with a tachometer and a 0.2&nbsp;Nm torque wrench.</p>
+        </div>
+      </div>
+
+      <div class="figs">
+        <h3 class="figs-title">Build and test</h3>
+        <div class="gallery">
+          <figure class="w4 video">
+            <video src="assets/boat-prototype.mp4" poster="assets/boat-prototype-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="The 1:10 solar boat drive prototype spinning its propeller on the bench"></video>
+            <figcaption><b>Speed control test.</b> Varying the PWM duty cycle to change the propeller speed on the 1:10 prototype.</figcaption>
+          </figure>
+          <figure class="w8">
+            <button class="shot photo" type="button" data-full="assets/boat-prototype-final.jpg"><img src="assets/boat-prototype-final.jpg" alt="Final 1:10 prototype with gearbox and propeller on a test base"></button>
+            <figcaption><b>Final prototype.</b> Third iteration, with the gearbox added to reach the torque target.</figcaption>
+          </figure>
+          <figure class="w8">
+            <button class="shot photo" type="button" data-full="assets/buck-converter-board.jpg"><img src="assets/buck-converter-board.jpg" alt="Buck converter board with gate driver, MOSFETs, DC-link capacitors and hand-wound ETD29 inductor"></button>
+            <figcaption><b>Buck converter.</b> Gate driver, MOSFETs, DC link and the hand-wound inductor on an ETD29 core.</figcaption>
+          </figure>
+          <figure class="w4">
+            <button class="shot photo" type="button" data-full="assets/boat-control-bench.jpg"><img src="assets/boat-control-bench.jpg" alt="Lab bench with Simulink ePWM model on screen, oscilloscope and buck converter board" style="object-position: center 30%"></button>
+            <figcaption><b>Control bench.</b> Simulink ePWM model for the F28379D, with the switching waveform on the scope.</figcaption>
+          </figure>
+          <figure>
+            <button class="shot" type="button" data-full="assets/boat-prototype-cad.jpg"><img src="assets/boat-prototype-cad.jpg" alt="CAD of the first prototype: BLDC motor, shaft stabiliser, connector and propeller"></button>
+            <figcaption><b>Prototype CAD.</b> First iteration of the motor and shaft rig.</figcaption>
+          </figure>
+          <figure class="w4">
+            <button class="shot" type="button" data-full="assets/boat-simulink-control.jpg"><img src="assets/boat-simulink-control.jpg" alt="Simulink model of the embedded BLDC closed-loop control system"></button>
+            <figcaption><b>BLDC control.</b> Hall sensors to sector logic to six PWM outputs, built in Simulink.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/boat-shaft-fea.jpg"><img src="assets/boat-shaft-fea.jpg" alt="Fusion 360 stress analysis of the motor shaft support structure"></button>
+            <figcaption><b>Shaft FEA.</b> Von Mises stress in the full-scale shaft support, minimum safety factor 2.1.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/boat-concept-cad.jpg"><img src="assets/boat-concept-cad.jpg" alt="Concept CAD of the hinged PV panel with vertical slide"></button>
+            <figcaption><b>Concept f2.</b> Hinged PV panel, one of two final concepts scored in the design matrix.</figcaption>
+          </figure>
+          <figure class="w12">
+            <button class="shot" type="button" data-full="assets/boat-system-diagram.jpg"><img src="assets/boat-system-diagram.jpg" alt="System block diagram: PV panels, buck converter and batteries at the charging station, battery, motor drive and BLDC motor on the boat"></button>
+            <figcaption><b>System diagram.</b> Land-based solar charging station and the battery-powered drive on the boat.</figcaption>
+          </figure>
+          <figure class="w12 tall">
+            <button class="shot" type="button" data-full="assets/boat-ga-drawing.jpg"><img src="assets/boat-ga-drawing.jpg" alt="General assembly drawing of the motor and shaft"></button>
+            <figcaption><b>GA drawing.</b> Full-scale motor and shaft assembly.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="report">
+        <span class="doc">Full report available on request · <a href="#contact">get in touch</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== POWER SYSTEMS ===================== -->
+  <section class="project" id="power">
+    <div class="wrap">
+      <div class="project-head">
+        <div>
+          <p class="label">Project 02</p>
+          <h2 style="margin-top:8px">Power conversion, magnetics and machines</h2>
+          <p class="lede">A full simulation study of an electrical energy chain, from AC transmission and power-factor correction, through rectifiers and PWM inverters, to an electromagnetic actuator and DC machines. I modelled each stage in Simulink, MATLAB and FEMM and checked every result against hand calculation.</p>
+        </div>
+        <dl class="titleblock" aria-label="Project details">
+          <div class="wide"><dt>Unit</dt><dd>Electrical Energy Conversion and Supply</dd></div>
+          <div><dt>Type</dt><dd>Individual</dd></div>
+          <div><dt>Date</dt><dd>2025 – 26</dd></div>
+          <div><dt>Tools</dt><dd>Simulink, MATLAB, FEMM</dd></div>
+        </dl>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3>What I did</h3>
+          <ul class="did">
+            <li><b>AC systems:</b> modelled single- and three-phase supplies with transformers, sized a capacitor to correct a 150&nbsp;kW load from 0.75 to 0.95 power factor, and solved an unbalanced three-phase load for its neutral current.</li>
+            <li><b>Power electronics:</b> built a bridge rectifier with DC-link filtering, then half-bridge, full-bridge and three-phase PWM inverters with IGBTs, and used FFT analysis to trade switching frequency against harmonic distortion.</li>
+            <li><b>Magnetics:</b> refined a FEMM model of an electromagnetic actuator, built the matching reluctance circuit, and compared inductance, co-energy and force from both methods, linear and saturating.</li>
+            <li><b>Machines:</b> built dynamic Simulink models of permanent-magnet and wound-field DC machines, then derived the torque-speed envelope and efficiency curve of a 1.5&nbsp;MW machine with field weakening.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Key results</h3>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Study</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td>Power-factor correction, 0.75 → 0.95</td><td class="num met">Line current 20 → 16 A</td></tr>
+                <tr><td>Inverter switching 2 → 5.4 kHz</td><td class="num met">THD 7.4% → 2.8%</td></tr>
+                <tr><td>Rectifier DC-link ripple (25 mF)</td><td class="num">3.3% of mean</td></tr>
+                <tr><td>Unbalanced load neutral current</td><td class="num">5.77 A, matched sim</td></tr>
+                <tr><td>FEMM actuator mesh</td><td class="num">19,906 nodes</td></tr>
+                <tr><td>PM DC motor no-load speed</td><td class="num">579 rpm</td></tr>
+                <tr><td>1.5 MW machine efficiency</td><td class="num">91.5% at rated</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">Each simulated value was checked against a hand calculation in the report, for example 199.8 kVA measured against 200 kVA calculated.</p>
+        </div>
+      </div>
+
+      <div class="figs">
+        <h3 class="figs-title">Models</h3>
+        <div class="gallery">
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/eec-femm-mesh.jpg"><img src="assets/eec-femm-mesh.jpg" alt="FEMM model of the actuator showing flux lines and the refined triangular mesh"></button>
+            <figcaption><b>FEMM actuator model.</b> Flux lines over a mesh refined around the air gap: 19,906 nodes, 39,450 elements.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/eec-femm-density.jpg"><img src="assets/eec-femm-density.jpg" alt="FEMM flux density plot of the actuator with colour legend in tesla"></button>
+            <figcaption><b>Flux density.</b> Highest at the air gaps and under 0.75&nbsp;T, so the core stays out of saturation.</figcaption>
+          </figure>
+          <figure class="w12">
+            <button class="shot" type="button" data-full="assets/eec-igbt-halfbridge.jpg"><img src="assets/eec-igbt-halfbridge.jpg" alt="IGBT half-bridge with anti-parallel diodes and its PWM gate drive"></button>
+            <figcaption><b>IGBT half-bridge.</b> Anti-parallel diodes keep inductive load current flowing at turn-off.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="report">
+        <span class="doc">Full report available on request · <a href="#contact">get in touch</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FORMULA STUDENT AI ===================== -->
+  <section class="project" id="formula-student">
+    <div class="wrap">
+      <div class="project-head">
+        <div>
+          <p class="label">Project 03</p>
+          <h2 style="margin-top:8px">Formula Student AI</h2>
+          <p class="lede">Bristol's entry in the Autonomous Platform Cup: a driverless, low-voltage electric race car that competes at Silverstone. I lead the electrical team, which owns everything from the battery to the emergency stop.</p>
+        </div>
+        <dl class="titleblock" aria-label="Project details">
+          <div class="wide"><dt>Project</dt><dd>Formula Student AI, Autonomous Platform Cup</dd></div>
+          <div><dt>Role</dt><dd>Electrical Team Lead</dd></div>
+          <div><dt>Team</dt><dd>8 engineers</dd></div>
+          <div><dt>System voltage</dt><dd>&lt; 60 V DC</dd></div>
+          <div><dt>Since</dt><dd>Feb 2026</dd></div>
+          <div class="wide"><dt>Status</dt><dd class="status">In progress · updated Oct 2026</dd></div>
+        </dl>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3>What I'm working on</h3>
+          <ul class="did">
+            <li>Leading a team of 8: splitting the electrical work into weekly tasks and keeping the subsystems consistent.</li>
+            <li>The safety shutdown circuit: a hard-wired series loop of master switches, shutdown buttons, an inertia switch and a SIL3 Remote Emergency Stop, which opens the accumulator isolation relays and triggers the emergency brake.</li>
+            <li>Integrating the AI computer and sensors with the car, including the autonomous system master switch, status indicators and fail-safe monitoring of system-critical signals.</li>
+            <li>The battery pack: specification, research and sourcing.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="figs">
+        <h3 class="figs-title">Full electrical circuit</h3>
+        <div class="gallery">
+          <figure class="w12">
+            <button class="shot" type="button" data-full="assets/fsai-full-circuit.png"><img src="assets/fsai-full-circuit.png" alt="Whole-car electrical schematic: 16S LiFePO4 accumulator with fuse, AIRs, pre-charge, BMS, TSAL and motor controller on the tractive side; 12 V system with shutdown circuit, latch, AIR and pre-charge coils, EBS and AS loads below" style="height:auto; max-height:none"></button>
+            <figcaption><b>The whole car on one sheet.</b> Top: the tractive system, from the 58&nbsp;V pack through the AIRs and pre-charge to the motor controller. Bottom: the 12&nbsp;V system and the shutdown circuit that holds the AIRs and brake valves on. Click to enlarge.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="log">
+        <h3>Progress log</h3>
+        <p class="note" style="margin-top:0">A live project. I add to this as the car comes together.</p>
+        <ol class="entries">
+          <li><time>Oct 2026</time><div><b>Drew the full electrical circuit.</b> Every component of the car on one sheet, with a part-by-part explanation and the rule behind each part, now in review with the team.</div></li>
+          <li><time>Oct 2026</time><div><b>Designed the shutdown circuit.</b> One series chain of shutdown buttons, inertia switch, remote emergency stop, AS permit and master switch. A relay latch keeps it open after any stop until reset by hand, in hardware, not software.</div></li>
+          <li><time>Oct 2026</time><div><b>Specified the accumulator.</b> 16 LiFePO4 cells in series, 51.2&nbsp;V nominal and 58.4&nbsp;V full, the highest pack under the 60&nbsp;V limit. Main fuse at the + terminal, an AIR on each pole, BMS and a Hall-effect current sensor.</div></li>
+          <li><time>Oct 2026</time><div><b>Made the car fail-safe.</b> Relay-timed pre-charge protects the AIRs from inrush, and the brake valves are held off by the shutdown circuit, so any lost wire or power applies the brakes.</div></li>
+          <li><time>Oct 2026</time><div><b>Isolated the two systems.</b> The 58&nbsp;V side and the 12&nbsp;V side share no wire. They connect only through relay coils, an optocoupled TSAL board, the Hall sensor and isolated BMS and controller units.</div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== CARAVAN TOW LOAD ===================== -->
+  <section class="project" id="tow-load">
+    <div class="wrap">
+      <div class="project-head">
+        <div>
+          <p class="label">Project 04</p>
+          <h2 style="margin-top:8px">Caravan tow load device</h2>
+          <p class="lede">A tow bar that measures the forces between a car and a caravan while it drives: horizontal pull from a strain gauge, vertical nose load from a piezoelectric sensor, logged by a Raspberry Pi Pico at up to 120&nbsp;km/h.</p>
+        </div>
+        <dl class="titleblock" aria-label="Project details">
+          <div class="wide"><dt>Project</dt><dd>Design Project (TB1), Electro-Mechanical Engineering Practice</dd></div>
+          <div><dt>Role</dt><dd>Team lead, 5 students</dd></div>
+          <div><dt>Date</dt><dd>Oct – Dec 2025</dd></div>
+          <div><dt>Design loads</dt><dd>18.4 kN / 3.4 kN</dd></div>
+          <div><dt>Sampling</dt><dd>100 Hz</dd></div>
+          <div class="wide"><dt>My sections</dt><dd>PDS, concepts, CAD, design analysis</dd></div>
+        </dl>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3>My role</h3>
+          <ul class="did">
+            <li>Led the team of 5 from specification to final design, assigning weekly tasks through the action log.</li>
+            <li>Co-wrote the product design specification and researched sensing concepts, including strain gauges and the piezoelectric and strain gauge combination that won the design matrix.</li>
+            <li>Built the CAD model of the winning concept and refined it over several weeks, including adding a bearing so the strain gauge reads only the horizontal load.</li>
+            <li>Selected the double-row thrust ball bearing, and worked on material selection against the calculated forces.</li>
+            <li>Contributed to the design analysis behind the sensing chain.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Key numbers</h3>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Quantity</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Max horizontal force (tyre grip limit)</td><td class="num">18.4 kN</td></tr>
+                <tr><td>Vertical nose load</td><td class="num">3.4 kN</td></tr>
+                <tr><td>Strain in tow bar</td><td class="num">4.6 × 10⁻⁵</td></tr>
+                <tr><td>ADC</td><td class="num">24-bit, ×128 gain</td></tr>
+                <tr><td>Low-pass filter cut-off</td><td class="num">50 Hz</td></tr>
+                <tr><td>Concept score (weighted)</td><td class="num met">4.3 / 5</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">The strain is far too small for the Pico's 12-bit ADC, so the design moved to a 24-bit ADC with internal gain. The chosen concept scored highest or joint highest in every weighting of the sensitivity study.</p>
+        </div>
+      </div>
+
+      <div class="figs">
+        <h3 class="figs-title">Design</h3>
+        <div class="gallery">
+          <figure class="w12 tall">
+            <button class="shot" type="button" data-full="assets/caravan-assembly.jpg"><img src="assets/caravan-assembly.jpg" alt="Assembly drawing of the tow bar with tow ball, bearing mounting, thrust bearing, piezoelectric sensor and strain gauges"></button>
+            <figcaption><b>Assembly drawing.</b> Tow bar, bearing mounting, thrust bearing, piezoelectric sensor and two strain gauges.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/caravan-force-balance.jpg"><img src="assets/caravan-force-balance.jpg" alt="Hand-drawn force balance between the jeep and the caravan"></button>
+            <figcaption><b>Force balance.</b> Drive, drag and rolling forces on the car and caravan.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/caravan-bridge-filter.jpg"><img src="assets/caravan-bridge-filter.jpg" alt="Wheatstone half bridge with two strain gauges and a capacitor low-pass filter"></button>
+            <figcaption><b>Sensing circuit.</b> Half bridge with two strain gauges and a 50&nbsp;Hz low-pass filter.</figcaption>
+          </figure>
+          <figure class="w12">
+            <button class="shot" type="button" data-full="assets/caravan-mcda.jpg"><img src="assets/caravan-mcda.jpg" alt="Decision matrix scoring six sensing concepts"></button>
+            <figcaption><b>Decision matrix.</b> Strain gauge plus piezoelectric scored 4.3, ahead of strain gauge plus LVDT at 4.2.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/caravan-concept-sketch.jpg"><img src="assets/caravan-concept-sketch.jpg" alt="Concept sketch with a piezoelectric sensor on the tow ball and a strain gauge on the flange"></button>
+            <figcaption><b>Concept sketch.</b> The first layout, before the sensor moved inside the tow bar shaft.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/caravan-pareto.jpg"><img src="assets/caravan-pareto.jpg" alt="Pareto chart of risk priority numbers from the FMEA"></button>
+            <figcaption><b>Risk analysis.</b> Pareto chart of FMEA risk priority numbers.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="report">
+        <span class="doc">Full report available on request · <a href="#contact">get in touch</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VIBRATION LAB ===================== -->
+  <section class="project" id="vibration">
+    <div class="wrap">
+      <div class="project-head">
+        <div>
+          <p class="label">Project 05</p>
+          <h2 style="margin-top:8px">Vibration-based stiffness testing</h2>
+          <p class="lede">Could a piece of metal found at a disaster site stand in for a broken ambulance leaf spring? I measured its Young's modulus from how fast it vibrates, using a microphone circuit, a Raspberry Pi Pico and some Python.</p>
+        </div>
+        <dl class="titleblock" aria-label="Project details">
+          <div class="wide"><dt>Project</dt><dd>Dynamics lab, material stiffness</dd></div>
+          <div><dt>Type</dt><dd>Individual</dd></div>
+          <div><dt>Date</dt><dd>2025</dd></div>
+          <div><dt>Hardware</dt><dd>Raspberry Pi Pico</dd></div>
+          <div><dt>Software</dt><dd>Python, JupyterLab</dd></div>
+        </dl>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3>What I did</h3>
+          <ul class="did">
+            <li>Built the sensing circuit: condenser microphone, high-pass filter, amplifier and Schottky protection feeding the Pico's ADC.</li>
+            <li>Clamped a 300&nbsp;mm ruler as a cantilever and recorded its vibration at three overhang lengths, three trials each.</li>
+            <li>Wrote a Python pipeline that trims each recording, applies a Butterworth filter and counts zero crossings to find the natural frequency.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Outcome</h3>
+          <p>The material came out stiffer than spring steel, so it would not absorb shocks and is not a safe replacement. The report also traces the scatter in the results back to the setup, mainly clamping and microphone calibration, and suggests how to fix both.</p>
+        </div>
+      </div>
+
+      <div class="figs">
+        <h3 class="figs-title">Figures</h3>
+        <div class="gallery">
+          <figure class="w12 tall">
+            <button class="shot photo" type="button" data-full="assets/vibration-setup-labelled.jpg"><img src="assets/vibration-setup-labelled.jpg" alt="Labelled test setup: books clamping a metal ruler as a cantilever above a breadboard with microphone, filter and amplifier circuit, Raspberry Pi Pico WH and two 9 V batteries" style="object-fit: contain; background: #1d2128"></button>
+            <figcaption><b>Test setup.</b> Ruler clamped as a cantilever above the microphone circuit, read by a Raspberry Pi Pico WH.</figcaption>
+          </figure>
+          <figure class="w12">
+            <button class="shot" type="button" data-full="assets/vibration-filtered-signal.jpg"><img src="assets/vibration-filtered-signal.jpg" alt="Filtered decaying vibration signal from the ruler over one second"></button>
+            <figcaption><b>Filtered signal.</b> Decaying vibration after the Butterworth filter, 100&nbsp;mm overhang.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="report">
+        <span class="doc">Full report available on request · <a href="#contact">get in touch</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HEATSINK ===================== -->
+  <section class="project" id="heatsink">
+    <div class="wrap">
+      <div class="project-head">
+        <div>
+          <p class="label">Project 06</p>
+          <h2 style="margin-top:8px">Heatsink thermal analysis &amp; LED efficiency</h2>
+          <p class="lede">How well does a finned aluminium heatsink cool a high-power LED? We built a parametric thermal model in MATLAB, tested the real heatsink in a 3D-printed fan duct, and compared the two.</p>
+        </div>
+        <dl class="titleblock" aria-label="Project details">
+          <div class="wide"><dt>Project</dt><dd>Heatsink and LED efficiency characterisation</dd></div>
+          <div><dt>Type</dt><dd>Group project</dd></div>
+          <div><dt>Date</dt><dd>2025</dd></div>
+          <div><dt>Tools</dt><dd>MATLAB, Fusion 360</dd></div>
+          <div><dt>Data logging</dt><dd>TracerDAQ, 8 ch.</dd></div>
+        </dl>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3>The project</h3>
+          <p class="note" style="margin-top:0;margin-bottom:10px">My part: running the TracerDAQ data logging in both labs, assembling the duct and heatsink model in Fusion&nbsp;360, and writing the introduction and experimental method.</p>
+          <ul class="did">
+            <li>Built a parametric thermal model of the heatsink in MATLAB from published fin-array correlations.</li>
+            <li>Designed and 3D-printed a fan duct in Fusion&nbsp;360 to push even airflow across the fins.</li>
+            <li>Logged eight temperature channels with TracerDAQ for 30, 40 and 50&nbsp;mm fins, then compared measured and modelled thermal resistance.</li>
+            <li>Used the heatsink results to estimate the efficiency of the high-power LED.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Results</h3>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>Fin height</th><th>Measured R<sub>sink</sub></th><th>Model R<sub>sink</sub></th></tr></thead>
+              <tbody>
+                <tr><td class="num">30 mm</td><td class="num">0.32 K/W</td><td class="num">0.44 K/W</td></tr>
+                <tr><td class="num">40 mm</td><td class="num">0.33 K/W</td><td class="num">0.35 K/W</td></tr>
+                <tr><td class="num">50 mm</td><td class="num">0.33 K/W</td><td class="num">0.30 K/W</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">At 50&nbsp;mm the measurement is within 10% of the model. The model predicts resistance falling with fin height, but the measurements stayed nearly flat, which the report puts down to non-uniform airflow from the duct and heat lost through the fin tips. LED efficiency came out at about 48%.</p>
+        </div>
+      </div>
+
+      <div class="figs">
+        <h3 class="figs-title">Figures</h3>
+        <div class="gallery">
+          <figure class="w12 tall">
+            <button class="shot" type="button" data-full="assets/heatsink-assembly-cad.jpg"><img src="assets/heatsink-assembly-cad.jpg" alt="Fusion 360 model of the fan duct assembled with the heatsink"></button>
+            <figcaption><b>Test assembly.</b> Fan duct and heatsink combined in Fusion&nbsp;360.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/heatsink-temperature-log.jpg"><img src="assets/heatsink-temperature-log.jpg" alt="Temperature against time for eight thermocouple channels as the heatsink warms up"></button>
+            <figcaption><b>Temperature log.</b> Eight channels from TracerDAQ as the heatsink reaches steady state.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/heatsink-duct-cad.jpg"><img src="assets/heatsink-duct-cad.jpg" alt="CAD of the 3D-printed fan duct with internal guide vanes"></button>
+            <figcaption><b>Fan duct.</b> Second design, with guide vanes to even out flow across the fins.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="report">
+        <span class="doc">Full report available on request · <a href="#contact">get in touch</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TECHNICAL DRAWING ===================== -->
+  <section class="project" id="drawing">
+    <div class="wrap">
+      <div class="project-head">
+        <div>
+          <p class="label">Project 07</p>
+          <h2 style="margin-top:8px">Technical drawing</h2>
+          <p class="lede">First-year drawing work from Introduction to Design Practice: a part drawn by hand in orthographic and isometric projection, then CAD part and assembly drawings for a line-following robot.</p>
+        </div>
+        <dl class="titleblock" aria-label="Project details">
+          <div class="wide"><dt>Unit</dt><dd>Introduction to Design Practice</dd></div>
+          <div><dt>Type</dt><dd>Individual</dd></div>
+          <div><dt>Date</dt><dd>Dec 2024</dd></div>
+          <div><dt>Projection</dt><dd>1st angle, isometric</dd></div>
+          <div><dt>Standard</dt><dd>Dimensioned, toleranced</dd></div>
+        </dl>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3>What I did</h3>
+          <ul class="did">
+            <li>Drew a rover artefact by hand in three orthographic views with a sectioned view, full dimensions and linear and angular tolerances.</li>
+            <li>Drew the same part freehand in isometric projection.</li>
+            <li>Produced a CAD part drawing of a wheel hub, with a cross-section and a 4:1 detail view of the hub.</li>
+            <li>Produced the full robot assembly drawing: section and isometric views, ballooned items and a 19-line parts list.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="figs">
+        <h3 class="figs-title">Drawings</h3>
+        <div class="gallery">
+          <figure class="w12 tall">
+            <button class="shot" type="button" data-full="assets/design-robot-assembly.jpg"><img src="assets/design-robot-assembly.jpg" alt="CAD assembly drawing of a robot with section view, isometric view, ballooned items and a parts list"></button>
+            <figcaption><b>Robot assembly.</b> Full assembly with section B-B, isometric view and parts list.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/design-wheel-hub.jpg"><img src="assets/design-wheel-hub.jpg" alt="CAD part drawing of a spoked wheel hub with cross-section and detail view"></button>
+            <figcaption><b>Wheel hub.</b> Part drawing with section A-A and a 4:1 detail of the hub.</figcaption>
+          </figure>
+          <figure class="w6">
+            <button class="shot" type="button" data-full="assets/design-isometric.jpg"><img src="assets/design-isometric.jpg" alt="Hand-drawn isometric view of the same part"></button>
+            <figcaption><b>Isometric hand drawing.</b> The same part in isometric projection.</figcaption>
+          </figure>
+          <figure class="w12 tall">
+            <button class="shot" type="button" data-full="assets/design-orthographic.jpg"><img src="assets/design-orthographic.jpg" alt="Hand-drawn orthographic drawing with front, side, top and section views"></button>
+            <figcaption><b>Orthographic hand drawing.</b> Three views and section A-A, dimensioned and toleranced.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="experience" id="experience">
+  <div class="wrap">
+    <p class="label">Industry</p>
+    <h2 style="margin-top:8px">Experience</h2>
+    <div class="roles">
+      <article>
+        <p class="when">May – Jun 2025</p>
+        <div>
+          <h3>Electro-Mechanical Engineering Intern <span class="where">· EMTECH, Beirut</span></h3>
+          <p>Designed and sized chilled water, ventilation, fire hose cabinet and sprinkler systems for a hotel project. Ran airflow and duct-sizing calculations, drafted layouts and schematics in AutoCAD, and produced shop drawings for drainage, water supply, HVAC and firefighting.</p>
+        </div>
+      </article>
+      <article>
+        <p class="when">Apr 2023 – Jan 2026</p>
+        <div>
+          <h3>Founder <span class="where">· Wholesale electronics import business, Lebanon</span></h3>
+          <p>Started at 17, importing Sony headphones from Dubai and supplying retailers across Lebanon. Handled sourcing, logistics, pricing and client relationships on my own.</p>
+        </div>
+      </article>
+      <article>
+        <p class="when">Jul 2023</p>
+        <div>
+          <h3>Electro-Mechanical Engineering Intern <span class="where">· Bentley Emirates, Dubai</span></h3>
+          <p>Shadowed workshop technicians servicing and repairing Bentley vehicles, including the Continental GT, and took part in maintenance and diagnostics of mechanical systems, electrical systems and sensors.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="label">Get in touch</p>
+    <h2 style="margin-top:8px">Contact</h2>
+    <div class="row">
+      <span class="email" id="email">youssefsabra2006@gmail.com</span>
+      <button class="copy" id="copy" type="button">Copy email</button>
+      <a class="textlink" href="https://www.linkedin.com/in/youssef-sabra-60b15327b" target="_blank" rel="noopener">LinkedIn profile</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Youssef Sabra · Bristol, UK · Photos, CAD, code and results are from my own coursework and project teams.</div>
+</footer>
+
+<dialog class="lightbox" id="lightbox" aria-label="Enlarged figure">
+  <button type="button" id="lb-close">Close</button>
+  <img id="lb-img" alt="">
+  <p id="lb-cap"></p>
+</dialog>
+
+<script>
+(function () {
+  var dlg = document.getElementById('lightbox');
+  var img = document.getElementById('lb-img');
+  var cap = document.getElementById('lb-cap');
+  document.querySelectorAll('.shot').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var thumb = btn.querySelector('img');
+      img.src = btn.getAttribute('data-full');
+      img.alt = thumb ? thumb.alt : '';
+      var fc = btn.parentElement.querySelector('figcaption');
+      cap.textContent = fc ? fc.textContent : '';
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    });
+  });
+  function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+  document.getElementById('lb-close').addEventListener('click', close);
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) close(); });
+
+  var copyBtn = document.getElementById('copy');
+  copyBtn.addEventListener('click', function () {
+    var text = document.getElementById('email').textContent;
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copyBtn.textContent = 'Selected, press Ctrl+C';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { copyBtn.textContent = 'Copied'; }, selectIt);
+    } else { selectIt(); }
+    setTimeout(function () { copyBtn.textContent = 'Copy email'; }, 2500);
+  });
+})();
+</script>
+
+</body>
+</html>
