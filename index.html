@@ -494,6 +494,10 @@ dialog.lightbox button {
             <button class="shot" type="button" data-full="assets/fsai-full-circuit.png"><img src="assets/fsai-full-circuit.png" alt="Whole-car electrical schematic: 16S LiFePO4 accumulator with fuse, AIRs, pre-charge, BMS, TSAL and motor controller on the tractive side; 12 V system with shutdown circuit, latch, AIR and pre-charge coils, EBS and AS loads below" style="height:auto; max-height:none"></button>
             <figcaption><b>The whole car on one sheet.</b> Top: the tractive system, from the 58&nbsp;V pack through the AIRs and pre-charge to the motor controller. Bottom: the 12&nbsp;V system and the shutdown circuit that holds the AIRs and brake valves on. Click to enlarge.</figcaption>
           </figure>
+            <figure class="w12">
+            <button class="shot" type="button" data-full="assets/fsai-tsal-schematic.png"><img src="assets/fsai-tsal-schematic.png" alt="TSAL schematic: resistor divider, LM393 comparator with LM4041 reference and hysteresis on the tractive side, PC817 optocoupler and isolated DC-DC across the barrier, MOSFETs switching the red and green lamps on the 12 V side" style="height:auto; max-height:none"></button>
+            <figcaption><b>TSAL circuit, going onto a PCB.</b> A comparator turns the light red above 25.1&nbsp;V and back off at 24.4&nbsp;V, and the answer crosses the isolation barrier as light through an optocoupler. I'm laying it out in KiCad as a 100&nbsp;&times;&nbsp;60&nbsp;mm two-layer board, with at least 4&nbsp;mm between the two sides. Click to enlarge.</figcaption>
+          </figure>
         </div>
       </div>
 
