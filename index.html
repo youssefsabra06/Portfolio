@@ -116,7 +116,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--copper); outlin
 .index ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); }
 @media (max-width: 1000px) { .index ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .log { margin-top: 44px; }
-.log h3 { font-size: var(--step-1); font-weight: 700; margin-bottom: 6px; }
+.log h3 { .log.is-collapsed .entries li:nth-child(n+4) { display: none; }
+.log-more {
+  margin: 6px 0 0 20px; padding: 6px 12px; font: inherit; font-size: 0.875rem; font-weight: 600;
+  color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 3px; cursor: pointer;
+}
+.log-more:hover { border-color: var(--ink); }
+.log-more[hidden] { display: none; }
+  font-size: var(--step-1); font-weight: 700; margin-bottom: 6px; }
 .entries { list-style: none; margin: 14px 0 0; padding: 0; border-left: 2px solid var(--line); }
 .entries li { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 4px 18px; padding: 10px 0 10px 18px; position: relative; }
 .entries li::before { content: ""; position: absolute; left: -6px; top: 16px; width: 10px; height: 10px; border-radius: 50%; background: var(--copper); }
@@ -501,10 +508,13 @@ dialog.lightbox button {
         </div>
       </div>
 
-      <div class="log">
+            <div class="log">
         <h3>Progress log</h3>
         <p class="note" style="margin-top:0">A live project. I add to this as the car comes together.</p>
         <ol class="entries">
+          <li><time>Nov 2026</time><div><b>Drew the accumulator schematic.</b> An Altium sheet of the battery box with a 250&nbsp;A fuse on pack +, a TE Kilovac EV200HAANA AIR on each pole (the version with the auxiliary contacts the TSAL needs) and a Gigavac P195BDA pre-charge relay, with only three connectors through the box wall. The BMS is our own board around a TI BQ79616-Q1 that TI is sponsoring; it trips at 3.65&nbsp;V or 2.50&nbsp;V per cell or 60&nbsp;&deg;C and opens the shutdown circuit in hardware.</div></li>
+          <li><time>Nov 2026</time><div><b>Laid out the battery box.</b> A four-sheet concept drawing and a matching Fusion 360 script place the 16 cells in two rows of eight inside a 485&nbsp;&times;&nbsp;290&nbsp;&times;&nbsp;240&nbsp;mm aluminium box, with the fuse 46.5&nbsp;mm from the + terminal and the AIRs and BMS in a bay behind a polycarbonate barrier. Estimated mass is about 45&nbsp;kg.</div></li>
+          <li><time>Nov 2026</time><div><b>Chose the drive and tractive parts.</b> A Motenergy ME1718 motor with a Sevcon Gen4 Size 4 48&nbsp;V controller, plus the AIRs, pre-charge relay, 70&nbsp;mm&sup2; cable, 12&nbsp;V battery, TSAL lamp and ASSIs. The motor peaks at about 43&nbsp;Nm against the 150&nbsp;Nm needed at the wheels, so the car needs a reduction of about 4:1 rather than direct drive.</div></li>
           <li><time>Nov 2026</time><div><b>Wrote the accumulator datasheet.</b> A target spec for a custom 16S1P LiFePO4 pack, 100&nbsp;Ah and 5.12&nbsp;kWh, with charging capped at 3.60&nbsp;V per cell (57.6&nbsp;V) to keep 2.4&nbsp;V of margin under the 60&nbsp;V limit. It sets the limits at 200&nbsp;A discharge and 100&nbsp;A regen, with a 12&nbsp;m&Omega; pack resistance budget and a 250&nbsp;A main fuse.</div></li>
           <li><time>Oct 2026</time><div><b>Planned the electrical year.</b> Five phases from research to scrutineering, built around the university calendar, with design freeze on 20&nbsp;Nov, orders by 27&nbsp;Nov, a complete bench system by 19&nbsp;Feb and the car in testing by 19&nbsp;Mar.</div></li>
           <li><time>Oct 2026</time><div><b>Chose direct drive.</b> One motor and one controller with no gearbox.</div></li>
@@ -518,6 +528,26 @@ dialog.lightbox button {
           <li><time>Oct 2026</time><div><b>Made the car fail-safe.</b> Relay-timed pre-charge protects the AIRs from inrush, and the brake valves are held off by the shutdown circuit, so any lost wire or power applies the brakes.</div></li>
           <li><time>Oct 2026</time><div><b>Isolated the two systems.</b> The 58&nbsp;V side and the 12&nbsp;V side share no wire. They connect only through relay coils, an optocoupled TSAL board, the Hall sensor and isolated BMS and controller units.</div></li>
         </ol>
+        <button class="log-more" type="button" hidden aria-expanded="false">Show more</button>
+        <script>
+        (function () {
+          var log = document.currentScript.parentElement;
+          var btn = log.querySelector('.log-more');
+          var extra = log.querySelectorAll('.entries li').length - 3;
+          if (extra < 1) return;
+          function set(open) {
+            log.classList.toggle('is-collapsed', !open);
+            btn.setAttribute('aria-expanded', open);
+            btn.textContent = open ? 'Show less' : 'Show more (' + extra + ' earlier)';
+          }
+          btn.hidden = false; set(false);
+          btn.addEventListener('click', function () {
+            var open = log.classList.contains('is-collapsed');
+            set(open);
+            if (!open) log.scrollIntoView({ block: 'nearest' });
+          });
+        })();
+        </script>
       </div>
     </div>
   </section>
